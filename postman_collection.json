@@ -1,0 +1,173 @@
+{
+  "info": {
+    "name": "Omnicore Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth Users",
+      "item": [
+        {
+          "name": "Create auth user",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password_hash\": \"$2b$10$hashedpassword\",\n  \"country_id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\",\n  \"is_active\": true,\n  \"email_verified\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-users"]
+            }
+          }
+        },
+        {
+          "name": "List auth users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-users"]
+            }
+          }
+        },
+        {
+          "name": "Get auth user by id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-users", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Update auth user",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newemail@example.com\",\n  \"is_active\": false,\n  \"email_verified\": true,\n  \"last_login_at\": \"2026-01-21T10:00:00.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-users", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Delete auth user",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-users", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth Sessions",
+      "item": [
+        {
+          "name": "Create auth session",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\",\n  \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"expires_at\": \"2026-02-21T10:00:00.000Z\",\n  \"ip_address\": \"192.168.1.1\",\n  \"user_agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-sessions",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-sessions"]
+            }
+          }
+        },
+        {
+          "name": "List auth sessions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-sessions",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-sessions"]
+            }
+          }
+        },
+        {
+          "name": "Get auth session by id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-sessions/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-sessions", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Get auth sessions by user id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-sessions/user/:userId",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-sessions", "user", ":userId"]
+            }
+          }
+        },
+        {
+          "name": "Update auth session",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"expires_at\": \"2026-03-21T10:00:00.000Z\",\n  \"ip_address\": \"192.168.1.2\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-sessions/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-sessions", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Delete auth session",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth-sessions/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth-sessions", ":id"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3003"
+    }
+  ]
+}
