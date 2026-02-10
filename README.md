@@ -42,13 +42,30 @@ validation, refresh tokens, and logout, backed by PostgreSQL + Prisma.
 
 ## API
 
-Base URL: `/auth`
+Auth endpoints (base URL: `/auth`)
 
 - `POST /auth/signup`
 - `POST /auth/login`
 - `POST /auth/refresh`
 - `POST /auth/logout`
 - `POST /auth/validate`
+
+Auth users (base URL: `/auth-users`)
+
+- `POST /auth-users`
+- `GET /auth-users`
+- `GET /auth-users/:id`
+- `PUT /auth-users/:id`
+- `DELETE /auth-users/:id`
+
+Auth sessions (base URL: `/auth-sessions`)
+
+- `POST /auth-sessions`
+- `GET /auth-sessions`
+- `GET /auth-sessions/:id`
+- `GET /auth-sessions/user/:userId`
+- `PUT /auth-sessions/:id`
+- `DELETE /auth-sessions/:id`
 
 Health check: `GET /health`
 

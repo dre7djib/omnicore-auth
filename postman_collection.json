@@ -100,6 +100,147 @@
       ]
     },
     {
+      "name": "Auth Users",
+      "item": [
+        {
+          "name": "List auth users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth-users",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-users"]
+            }
+          }
+        },
+        {
+          "name": "Get auth user by id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth-users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-users", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Update auth user",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password_hash\": \"new-hash\",\n  \"country_id\": null,\n  \"is_active\": true,\n  \"email_verified\": true,\n  \"last_login_at\": \"2026-02-10T12:00:00.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth-users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-users", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Delete auth user",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/auth-users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-users", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth Sessions",
+      "item": [
+        {
+          "name": "Create auth session",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\",\n  \"refresh_token\": \"refresh-token\",\n  \"expires_at\": \"2026-02-10T12:00:00.000Z\",\n  \"ip_address\": \"127.0.0.1\",\n  \"user_agent\": \"PostmanRuntime/7.43.0\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth-sessions",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-sessions"]
+            }
+          }
+        },
+        {
+          "name": "List auth sessions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth-sessions",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-sessions"]
+            }
+          }
+        },
+        {
+          "name": "Get auth session by id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth-sessions/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-sessions", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Get auth sessions by user id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth-sessions/user/:userId",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-sessions", "user", ":userId"]
+            }
+          }
+        },
+        {
+          "name": "Update auth session",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"new-refresh-token\",\n  \"expires_at\": \"2026-02-10T13:00:00.000Z\",\n  \"ip_address\": null,\n  \"user_agent\": null\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth-sessions/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-sessions", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Delete auth session",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/auth-sessions/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth-sessions", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Health",
       "item": [
         {
