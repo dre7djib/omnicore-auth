@@ -1,0 +1,185 @@
+-- CreateTable
+CREATE TABLE "COUNTRIES" (
+    "id" UUID NOT NULL,
+    "name" TEXT NOT NULL,
+    "country_code" TEXT NOT NULL,
+    "currency" TEXT,
+    "is_active" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "COUNTRIES_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PRODUCTS" (
+    "id" UUID NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "is_active" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "PRODUCTS_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ROLES" (
+    "id" UUID NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+
+    CONSTRAINT "ROLES_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AUTH_USERS" (
+    "id" UUID NOT NULL,
+    "email" TEXT NOT NULL,
+    "password_hash" TEXT NOT NULL,
+    "country_id" UUID,
+    "is_active" BOOLEAN NOT NULL DEFAULT true,
+    "email_verified" BOOLEAN NOT NULL DEFAULT false,
+    "last_login_at" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "AUTH_USERS_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "USERS" (
+    "id" UUID NOT NULL,
+    "country_id" UUID,
+    "first_name" TEXT,
+    "last_name" TEXT,
+    "phone_number" TEXT,
+    "status" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "USERS_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "USER_ROLES" (
+    "user_id" UUID NOT NULL,
+    "role_id" UUID NOT NULL,
+    "assigned_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "USER_ROLES_pkey" PRIMARY KEY ("user_id","role_id")
+);
+
+-- CreateTable
+CREATE TABLE "AUTH_SESSIONS" (
+    "id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "refresh_token" TEXT NOT NULL,
+    "expires_at" TIMESTAMP(3) NOT NULL,
+    "ip_address" TEXT,
+    "user_agent" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "AUTH_SESSIONS_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "COUNTRY_PRODUCTS" (
+    "id" UUID NOT NULL,
+    "product_id" UUID NOT NULL,
+    "country_id" UUID NOT NULL,
+    "price" DECIMAL(10,2) NOT NULL,
+    "currency" TEXT,
+    "quantity" INTEGER NOT NULL DEFAULT 0,
+    "is_available" BOOLEAN NOT NULL DEFAULT true,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "COUNTRY_PRODUCTS_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PRODUCT_IMAGES" (
+    "id" UUID NOT NULL,
+    "product_id" UUID NOT NULL,
+    "url" TEXT NOT NULL,
+    "is_primary" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "PRODUCT_IMAGES_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "USER_ADDRESSES" (
+    "id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "country_id" UUID,
+    "street" TEXT,
+    "city" TEXT,
+    "postal_code" TEXT,
+    "is_primary" BOOLEAN NOT NULL DEFAULT false,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "USER_ADDRESSES_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "USER_PREFERENCES" (
+    "id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "language" TEXT,
+    "timezone" TEXT,
+    "notifications_enabled" BOOLEAN NOT NULL DEFAULT true,
+
+    CONSTRAINT "USER_PREFERENCES_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "USER_AUDIT_LOGS" (
+    "id" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
+    "action" TEXT NOT NULL,
+    "performed_by" UUID,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "USER_AUDIT_LOGS_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "AUTH_USERS_email_key" ON "AUTH_USERS"("email");
+
+-- AddForeignKey
+ALTER TABLE "AUTH_USERS" ADD CONSTRAINT "AUTH_USERS_country_id_fkey" FOREIGN KEY ("country_id") REFERENCES "COUNTRIES"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USERS" ADD CONSTRAINT "USERS_id_fkey" FOREIGN KEY ("id") REFERENCES "AUTH_USERS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USERS" ADD CONSTRAINT "USERS_country_id_fkey" FOREIGN KEY ("country_id") REFERENCES "COUNTRIES"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USER_ROLES" ADD CONSTRAINT "USER_ROLES_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "AUTH_USERS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USER_ROLES" ADD CONSTRAINT "USER_ROLES_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "ROLES"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AUTH_SESSIONS" ADD CONSTRAINT "AUTH_SESSIONS_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "AUTH_USERS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "COUNTRY_PRODUCTS" ADD CONSTRAINT "COUNTRY_PRODUCTS_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "PRODUCTS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "COUNTRY_PRODUCTS" ADD CONSTRAINT "COUNTRY_PRODUCTS_country_id_fkey" FOREIGN KEY ("country_id") REFERENCES "COUNTRIES"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PRODUCT_IMAGES" ADD CONSTRAINT "PRODUCT_IMAGES_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "PRODUCTS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USER_ADDRESSES" ADD CONSTRAINT "USER_ADDRESSES_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "USERS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USER_ADDRESSES" ADD CONSTRAINT "USER_ADDRESSES_country_id_fkey" FOREIGN KEY ("country_id") REFERENCES "COUNTRIES"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USER_PREFERENCES" ADD CONSTRAINT "USER_PREFERENCES_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "USERS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "USER_AUDIT_LOGS" ADD CONSTRAINT "USER_AUDIT_LOGS_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "USERS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

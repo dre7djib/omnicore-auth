@@ -1,9 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import { authRouter } from './routes/auth.route.js';
 import { requestLoggerMiddleware } from './middlewares/request-logger.middleware.js';
 import { errorHandlerMiddleware } from './middlewares/error-handler.middleware.js';
-import { authUserRouter } from './routes/auth_users.route.js';
-import { authSessionRouter } from './routes/auth_sessions.route.js';
 
 export const createApp = () => {
   const app = express();
@@ -17,11 +16,10 @@ export const createApp = () => {
     res.json({ status: 'ok' });
   });
 
-  // Routes
-  app.use('/api/auth-users', authUserRouter);
-  app.use('/api/auth-sessions', authSessionRouter);
+  app.use('/auth', authRouter);
 
   app.use(errorHandlerMiddleware);
 
   return app;
 };
+

@@ -25,3 +25,4 @@ export const logger = {
     console.error(JSON.stringify(buildEcsLog('error', message, meta)));
   },
 };
+
