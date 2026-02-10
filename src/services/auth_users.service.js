@@ -36,14 +36,6 @@ const normalizeUpdatePayload = (payload) => {
 };
 
 export const authUserService = {
-  async createAuthUser(payload) {
-    logger.info('AuthUser create requested');
-    const data = normalizeCreatePayload(payload);
-    const authUser = await authUserRepository.create(data);
-    logger.info('AuthUser created', { authUser: { id: authUser.id } });
-    return authUserModel.toPublic(authUser);
-  },
-
   async listAuthUsers() {
     logger.info('AuthUser list requested');
     const authUsers = await authUserRepository.findMany();

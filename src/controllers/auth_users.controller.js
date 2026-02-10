@@ -10,10 +10,6 @@ const parseAuthUserId = (value) => {
 };
 
 export const authUserController = {
-  async create(req, res) {
-    const authUser = await authUserService.createAuthUser(req.body);
-    res.status(201).json(authUser);
-  },
 
   async list(req, res) {
     const authUsers = await authUserService.listAuthUsers();

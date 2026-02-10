@@ -1,11 +1,6 @@
 import { getPrisma } from '../config/database.js';
 
 export const authUserRepository = {
-  create(data) {
-    const prisma = getPrisma();
-    return prisma.authUser.create({ data });
-  },
-
   findMany() {
     const prisma = getPrisma();
     return prisma.authUser.findMany({ orderBy: { createdAt: 'desc' } });

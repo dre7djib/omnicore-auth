@@ -6,14 +6,6 @@ const uuidSchema = Joi.string().guid({
 
 const emailSchema = Joi.string().email().trim().lowercase().max(255);
 
-export const createAuthUserSchema = Joi.object({
-  email: emailSchema.required(),
-  password_hash: Joi.string().required().min(1),
-  country_id: uuidSchema.allow(null),
-  is_active: Joi.boolean(),
-  email_verified: Joi.boolean(),
-});
-
 export const updateAuthUserSchema = Joi.object({
   email: emailSchema,
   password_hash: Joi.string().min(1),

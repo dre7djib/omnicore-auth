@@ -6,7 +6,6 @@ import { createAuthUserSchema, updateAuthUserSchema } from '../validators/auth_u
 
 export const authUserRouter = Router();
 
-authUserRouter.post('/', validateBody(createAuthUserSchema), asyncHandler(authUserController.create));
 authUserRouter.get('/', asyncHandler(authUserController.list));
 authUserRouter.get('/:id', asyncHandler(authUserController.getById));
 authUserRouter.put('/:id', validateBody(updateAuthUserSchema), asyncHandler(authUserController.update));
