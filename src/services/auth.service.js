@@ -43,6 +43,7 @@ const buildAccessToken = (user, roles) => {
       sub: user.id,
       email: user.email,
       roles,
+      countryId: user.countryId || null,
     },
     env.JWT_SECRET,
     { expiresIn: env.JWT_EXPIRES_IN }
