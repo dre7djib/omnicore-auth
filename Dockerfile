@@ -1,6 +1,6 @@
 FROM node:22-alpine AS deps
 
-EXPOSE 3002
+EXPOSE 3003
 EXPOSE 80
 
 WORKDIR /app
