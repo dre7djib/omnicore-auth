@@ -20,6 +20,22 @@ const createAuthError = (message, status = 401) => {
   return error;
 };
 
+const sendUserCreatedEmail = async (email) => {
+  try {
+    const res = await fetch(`${env.OMNICORE_SMTP_URL}/mail/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to send user created email: ${res.statusText}`);
+    }
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
 const parseDurationToMs = (value) => {
   const match = /^(\d+)([smhd])$/.exec(value || '');
   if (!match) {
@@ -94,6 +110,8 @@ export const authService = {
         countryId: countryId || null,
       },
     });
+
+    await sendUserCreatedEmail(email);
 
     return {
       id: user.id,
